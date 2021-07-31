@@ -1,7 +1,13 @@
+import logging
+import os.path
+import shutil
+
 import win32com.client
 import pandas as pd
-import logging
 
+from openpyxl import Workbook
+from openpyxl import load_workbook
+    
 '''
 @TODO readme of how this works
 
@@ -40,6 +46,32 @@ Clear the tasks output file, so we can reuse the formatting
 def clear_excel_output_file():
     logging.info ("CLEARING EXCEL TASK FILE")
 
+    #Make a backup of the original file
+    counter =1
+    while(os.path.exists(str(counter)+EXCEL_TASK_FILE)):
+        logging.debug("Backup file "+str(counter)+EXCEL_TASK_FILE+" exists, increment and try again")
+        counter +=1
+
+    shutil.copyfile(EXCEL_TASK_FILE, str(counter)+EXCEL_TASK_FILE)
+    logging.debug("Created new backup file:"+str(counter)+EXCEL_TASK_FILE)
+
+    #Open Sheet using Python
+    workbook = load_workbook(filename=EXCEL_TASK_FILE)
+    sheet = workbook.active
+
+    #Now delete everything until we are only left with the header row
+    # continuously delete row 2 until there
+    # is only a single row left over 
+    # that contains column names 
+    while(sheet.max_row > 1):
+        # this method removes the row 2
+        logging.debug("deleting row")
+        sheet.delete_rows(2)
+
+    #Save the result
+    workbook.save(filename=EXCEL_TASK_FILE)
+
+
 '''
 Output Tasks from Outlook Into Excel
 '''
@@ -58,9 +90,9 @@ def export_tasks_to_excel():
 if __name__ == '__main__':
     
     # Carry out the steps to sync excel adn outlook
-    read_tasks_into_outlook()
+    #read_tasks_into_outlook()
     clear_excel_output_file()
-    export_tasks_to_excel()
+    #export_tasks_to_excel()
     
 
 
