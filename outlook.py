@@ -1,9 +1,12 @@
 import logging
 import os.path
+from pickle import STRING
 import shutil
+from pandas.core.frame import DataFrame
 
 import win32com.client
 import pandas as pd
+
 
 from openpyxl import Workbook
 from openpyxl import load_workbook
@@ -13,6 +16,7 @@ Synchonize Outlook Tasks with an Excel file
 Look at Readme.md for an overview of what this script does
 '''
 #Constants
+LOG_FILE="task.log"
 EXCEL_TASK_FILE="task-data.xlsx"
 EXCEL_COL_NAMES={
     "Importance":1,
@@ -25,7 +29,6 @@ EXCEL_COL_NAMES={
     "CreatedDate":8,
     "Modified":9
     }
-LOG_FILE="task.log"
 
 #Handle TO Outlook, Logs and other objects we will need later
 OUTLOOK = win32com.client.Dispatch("Outlook.Application").GetNamespace("MAPI")
@@ -39,11 +42,66 @@ def read_tasks_into_outlook():
     logging.info ("READING TASKS INTO OUTLOOK")
 
     # Read our Excel tasks into a pandas dataframe
-    task_df = pd.read_excel(EXCEL_TASK_FILE, index_col=False)    
+    task_df_excel = pd.read_excel(EXCEL_TASK_FILE, index_col=False)
+    task_df_excel.fillna('',inplace=True)
+    task_df_excel.set_index('EntryID')
 
-    #Iterate through the rows (tasks) in this dataframe
-    for index, row in task_df.iterrows():
-        print(row)
+    logging.debug("Loaded from Excel")
+    logging.debug(task_df_excel)
+
+
+    #Now loop through our tasks in Outlook and try to match 
+    thisFolder = OUTLOOK.GetDefaultFolder(13)
+    folderItems = thisFolder.items
+
+    for task in folderItems:
+        this_task_id=str(task.EntryID)
+        logging.debug("Looking for update to:"+this_task_id[-10:])
+
+        # search our values from excel for this id
+        if this_task_id not in task_df_excel.values:
+            logging.debug("no match for:"+this_task_id[-10:]+ " skipping")
+
+        else:
+
+            logging.debug("found match for:"+this_task_id[-10:]+" processing")
+
+            #bit of a hack
+            my_filter = task_df_excel['EntryID'] == this_task_id
+
+            #Process this and decide to update
+            rslt_df = task_df_excel.loc[my_filter]
+            logging.debug("Matched in XL")
+            logging.debug(rslt_df)
+
+            #Now decide if we update or not
+            modified_flag= rslt_df.iat[0,EXCEL_COL_NAMES["Modified"]-1]  #adjust for being index based
+            if(modified_flag!='Y'):
+                logging.debug("Modified flag not set to Y - ignoring")
+            else:
+                #do update
+                logging.info("Modified is Y - try to update new text into task:"+rslt_df.iat[0,EXCEL_COL_NAMES["Subject"]-1])
+
+                #Update the values
+                #sheet.cell(row=2,column=EXCEL_COL_NAMES["Importance"]).value=task.Importance
+                #sheet.cell(row=2,column=EXCEL_COL_NAMES["Role"]).value=task.Role 
+                #sheet.cell(row=2,column=EXCEL_COL_NAMES["Categories"]).value=task.Categories # make comma safe?
+                task.Subject= rslt_df.iat[0,EXCEL_COL_NAMES["Subject"]-1]
+                print("attepting to update subject to:"+rslt_df.iat[0,EXCEL_COL_NAMES["Subject"]-1])
+                print("now value:"+task.Subject)
+                #sheet.cell(row=2,column=EXCEL_COL_NAMES["Team"]).value=task.TeamTask 
+                
+                #update Due Date only if it is not default
+                #tmpDate = str(task.DueDate)
+                #if(tmpDate!="4501-01-01 00:00:00+00:00"):
+                #    sheet.cell(row=2,column=EXCEL_COL_NAMES["DueDate"]).value=tmpDate
+
+                #sheet.cell(row=2,column=EXCEL_COL_NAMES["EntryID"]).value=task.EntryID 
+                #sheet.cell(row=2,column=EXCEL_COL_NAMES["CreatedDate"]).value=str(task.CreationTime)
+                #sheet.cell(row=2,column=EXCEL_COL_NAMES["Modified"]).value=str(task.LastModificationTime) 
+
+    
+ 
 
 
 '''
@@ -87,7 +145,6 @@ def export_tasks_to_excel():
 
     folderItems = thisFolder.items
     logging.info ("EXPORTING TASKS TO EXCEL")
-    
  
     #Open Excel Sheet using Python
     workbook = load_workbook(filename=EXCEL_TASK_FILE)
