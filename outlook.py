@@ -9,21 +9,27 @@ from openpyxl import Workbook
 from openpyxl import load_workbook
     
 '''
-@TODO readme of how this works
-
+Synchonize Outlook Tasks with an Excel file
+Look at Readme.md for an overview of what this script does
 '''
 #Constants
 EXCEL_TASK_FILE="task-data.xlsx"
+EXCEL_COL_NAMES={
+    "Importance":1,
+    "Role":2,
+    "Categories":3,
+    "Subject":4,
+    "Team":5,
+    "DueDate":6,
+    "EntryID":7,
+    "CreatedDate":8,
+    "Modified":9
+    }
 LOG_FILE="task.log"
 
 #Handle TO Outlook, Logs and other objects we will need later
 OUTLOOK = win32com.client.Dispatch("Outlook.Application").GetNamespace("MAPI")
 logging.basicConfig(filename=LOG_FILE, encoding='utf-8', level=logging.DEBUG)
-
-'''
-Importance	Role	Categories	Subject	Team	EntryID	DueDate	CreatedDate	Modified
-
-'''
 
 '''
 Read Task from Excel, update into excel if possible
@@ -70,6 +76,7 @@ def clear_excel_output_file():
 
     #Save the result
     workbook.save(filename=EXCEL_TASK_FILE)
+    workbook.close
 
 
 '''
@@ -80,21 +87,43 @@ def export_tasks_to_excel():
 
     folderItems = thisFolder.items
     logging.info ("EXPORTING TASKS TO EXCEL")
-    logging.debug("number of tasks"+str(folderItems.count))
+    
  
-    for task in folderItems:
-        logging.debug(task.Subject)
+    #Open Excel Sheet using Python
+    workbook = load_workbook(filename=EXCEL_TASK_FILE)
+    sheet = workbook.active
 
+    for task in folderItems:
+        logging.debug("Outputting task:"+task.Subject)
+        
+        #insert a new clear line (shifting other tasks downwards)
+        sheet.insert_rows(2)
+
+        #Update the values
+        sheet.cell(row=2,column=EXCEL_COL_NAMES["Importance"]).value=task.Importance
+        sheet.cell(row=2,column=EXCEL_COL_NAMES["Role"]).value=task.Role 
+        sheet.cell(row=2,column=EXCEL_COL_NAMES["Categories"]).value=task.Categories # make comma safe?
+        sheet.cell(row=2,column=EXCEL_COL_NAMES["Subject"]).value=task.Subject # make comma safe?
+        sheet.cell(row=2,column=EXCEL_COL_NAMES["Team"]).value=task.TeamTask 
+        
+        #update Due Date only if it is not default
+        tmpDate = str(task.DueDate)
+        if(tmpDate!="4501-01-01 00:00:00+00:00"):
+            sheet.cell(row=2,column=EXCEL_COL_NAMES["DueDate"]).value=tmpDate
+
+        sheet.cell(row=2,column=EXCEL_COL_NAMES["EntryID"]).value=task.EntryID 
+        sheet.cell(row=2,column=EXCEL_COL_NAMES["CreatedDate"]).value=str(task.CreationTime)
+        sheet.cell(row=2,column=EXCEL_COL_NAMES["Modified"]).value=str(task.LastModificationTime) 
+
+
+    #Save the result
+    workbook.save(filename=EXCEL_TASK_FILE)
 
 # simple code to run from command line
 if __name__ == '__main__':
     
     # Carry out the steps to sync excel adn outlook
-    #read_tasks_into_outlook()
-    clear_excel_output_file()
+    read_tasks_into_outlook()
+    #clear_excel_output_file()
     #export_tasks_to_excel()
     
-
-
-# Next open xl file
-

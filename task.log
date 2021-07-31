@@ -1,0 +1,105 @@
+INFO:root:CLEARING EXCEL TASK FILE
+DEBUG:root:Backup file 1task-data.xlsx exists, increment and try again
+DEBUG:root:Backup file 2task-data.xlsx exists, increment and try again
+DEBUG:root:Backup file 3task-data.xlsx exists, increment and try again
+DEBUG:root:Created new backup file:4task-data.xlsx
+INFO:root:EXPORTING TASKS TO EXCEL
+DEBUG:root:Outputting task:New task
+DEBUG:root:Outputting task:Test task
+INFO:root:CLEARING EXCEL TASK FILE
+DEBUG:root:Backup file 1task-data.xlsx exists, increment and try again
+DEBUG:root:Backup file 2task-data.xlsx exists, increment and try again
+DEBUG:root:Backup file 3task-data.xlsx exists, increment and try again
+DEBUG:root:Backup file 4task-data.xlsx exists, increment and try again
+DEBUG:root:Created new backup file:5task-data.xlsx
+DEBUG:root:deleting row
+DEBUG:root:deleting row
+INFO:root:EXPORTING TASKS TO EXCEL
+DEBUG:root:Outputting task:New task
+DEBUG:root:Outputting task:Test task
+INFO:root:CLEARING EXCEL TASK FILE
+DEBUG:root:Backup file 1task-data.xlsx exists, increment and try again
+DEBUG:root:Backup file 2task-data.xlsx exists, increment and try again
+DEBUG:root:Backup file 3task-data.xlsx exists, increment and try again
+DEBUG:root:Backup file 4task-data.xlsx exists, increment and try again
+DEBUG:root:Backup file 5task-data.xlsx exists, increment and try again
+INFO:root:CLEARING EXCEL TASK FILE
+DEBUG:root:Backup file 1task-data.xlsx exists, increment and try again
+DEBUG:root:Backup file 2task-data.xlsx exists, increment and try again
+DEBUG:root:Backup file 3task-data.xlsx exists, increment and try again
+DEBUG:root:Backup file 4task-data.xlsx exists, increment and try again
+DEBUG:root:Backup file 5task-data.xlsx exists, increment and try again
+DEBUG:root:Created new backup file:6task-data.xlsx
+DEBUG:root:deleting row
+DEBUG:root:deleting row
+INFO:root:EXPORTING TASKS TO EXCEL
+DEBUG:root:Outputting task:New task
+INFO:root:CLEARING EXCEL TASK FILE
+DEBUG:root:Backup file 1task-data.xlsx exists, increment and try again
+DEBUG:root:Backup file 2task-data.xlsx exists, increment and try again
+DEBUG:root:Backup file 3task-data.xlsx exists, increment and try again
+DEBUG:root:Backup file 4task-data.xlsx exists, increment and try again
+DEBUG:root:Backup file 5task-data.xlsx exists, increment and try again
+DEBUG:root:Backup file 6task-data.xlsx exists, increment and try again
+DEBUG:root:Created new backup file:7task-data.xlsx
+INFO:root:EXPORTING TASKS TO EXCEL
+DEBUG:root:Outputting task:New task
+DEBUG:root:Outputting task:Test task
+INFO:root:CLEARING EXCEL TASK FILE
+DEBUG:root:Created new backup file:1task-data.xlsx
+DEBUG:root:deleting row
+DEBUG:root:deleting row
+INFO:root:EXPORTING TASKS TO EXCEL
+DEBUG:root:Outputting task:New task
+DEBUG:root:Outputting task:Test task
+INFO:root:CLEARING EXCEL TASK FILE
+DEBUG:root:Backup file 1task-data.xlsx exists, increment and try again
+DEBUG:root:Created new backup file:2task-data.xlsx
+INFO:root:CLEARING EXCEL TASK FILE
+DEBUG:root:Created new backup file:1task-data.xlsx
+INFO:root:EXPORTING TASKS TO EXCEL
+DEBUG:root:Outputting task:New task
+DEBUG:root:Outputting task:Test task
+INFO:root:CLEARING EXCEL TASK FILE
+DEBUG:root:Created new backup file:1task-data.xlsx
+INFO:root:EXPORTING TASKS TO EXCEL
+DEBUG:root:Outputting task:New task
+DEBUG:root:Outputting task:Test task
+INFO:root:EXPORTING TASKS TO EXCEL
+DEBUG:root:Outputting task:New task
+DEBUG:root:Outputting task:Test task
+INFO:root:EXPORTING TASKS TO EXCEL
+INFO:root:EXPORTING TASKS TO EXCEL
+INFO:root:EXPORTING TASKS TO EXCEL
+DEBUG:root:Outputting task:New task
+DEBUG:root:Outputting task:Test task
+INFO:root:EXPORTING TASKS TO EXCEL
+INFO:root:EXPORTING TASKS TO EXCEL
+DEBUG:root:Outputting task:New task
+DEBUG:root:Outputting task:Test task
+INFO:root:EXPORTING TASKS TO EXCEL
+DEBUG:root:Outputting task:New task
+DEBUG:root:Outputting task:Test task
+INFO:root:EXPORTING TASKS TO EXCEL
+DEBUG:root:Outputting task:New task
+DEBUG:root:Outputting task:Test task
+INFO:root:EXPORTING TASKS TO EXCEL
+DEBUG:root:Outputting task:New task
+DEBUG:root:Outputting task:Test task
+INFO:root:EXPORTING TASKS TO EXCEL
+DEBUG:root:Outputting task:New task
+DEBUG:root:Outputting task:Test task
+INFO:root:EXPORTING TASKS TO EXCEL
+DEBUG:root:Outputting task:New task
+DEBUG:root:Outputting task:Test task
+INFO:root:EXPORTING TASKS TO EXCEL
+DEBUG:root:Outputting task:New task
+DEBUG:root:Outputting task:Test task
+INFO:root:EXPORTING TASKS TO EXCEL
+DEBUG:root:Outputting task:New task
+DEBUG:root:Outputting task:Test task
+DEBUG:root:Outputting task:Another new, maybe split task?
+INFO:root:EXPORTING TASKS TO EXCEL
+DEBUG:root:Outputting task:New task
+DEBUG:root:Outputting task:Test task
+DEBUG:root:Outputting task:Another new, maybe split task?

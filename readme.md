@@ -1,4 +1,18 @@
 
+Why would I want to do this?
+1) More power than microsoft todo
+2) onedrive, bulk edit in excel
+
+Other pluses
+* anywhere
+
+Of course not as good - simplcit
+
+
+Ohter suggestoins
+* Save to Onedrive
+* cron job to run automatically
+
 Sync Sequence
 1) Read in Excel Tasks to memory
 2) Iterate over *existing* outlook tasks. Where Excel Task is fresher, update the outlook task
