@@ -26,7 +26,7 @@ The script synchronizes (2 way) with an Excel file like the one below. Of course
 
 ## 2 Way Synchonization - Safety first
 
-By "2 Way" we mean that edits in Outlook or the Excel file get synchonized with each other, back and forward. But for safety first, we treat the Outlook Task list as the 'gold' copy. We only update from Excel into Outlook if the Modified Column in the spreadsheet has been set to Y.
+By "2 Way" we mean that edits in Outlook or the Excel file get synchonized with each other, back and forward. But for safety first, we treat the Outlook Task list as the 'gold' copy. 
 
 ### Synchonisation process
 
@@ -39,6 +39,7 @@ By "2 Way" we mean that edits in Outlook or the Excel file get synchonized with 
 * Following the 'Outlook is Gold' approach, this script
   * Does not delete in Outlook any task deleted in Excel - since we could mistakenly delete a new Outlook task, created after the Excel List was exported.
   * Does not add to Outlook, and task added to Excel - since we could mistakenly add back a task we decided to delete in Outlook
+  * Script only updates from Excel into Outlook if the Modified Column in the Excel spreadsheet has been set to Y.
 
 ## How to Install and Use
 
