@@ -66,7 +66,7 @@ def read_tasks_into_outlook():
 
             logging.debug("found match for:"+this_task_id[-10:]+" processing")
 
-            #bit of a hack
+            #set a filter for Pandas using the Task ID
             my_filter = task_df_excel['EntryID'] == this_task_id
 
             #Process this and decide to update
@@ -99,7 +99,9 @@ def read_tasks_into_outlook():
                 #sheet.cell(row=2,column=EXCEL_COL_NAMES["EntryID"]).value=task.EntryID 
                 #sheet.cell(row=2,column=EXCEL_COL_NAMES["CreatedDate"]).value=str(task.CreationTime)
                 #sheet.cell(row=2,column=EXCEL_COL_NAMES["Modified"]).value=str(task.LastModificationTime) 
-
+        
+    # ddd
+    
     
  
 
