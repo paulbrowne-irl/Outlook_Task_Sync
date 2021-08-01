@@ -1,12 +1,10 @@
 import logging
 import os.path
-from pickle import STRING
 import shutil
 from pandas.core.frame import DataFrame
 
 import win32com.client
 import pandas as pd
-
 
 from openpyxl import Workbook
 from openpyxl import load_workbook
@@ -32,6 +30,9 @@ EXCEL_COL_NAMES={
 
 #Handle TO Outlook, Logs and other objects we will need later
 OUTLOOK = win32com.client.Dispatch("Outlook.Application").GetNamespace("MAPI")
+#OUTLOOK = win32com.client.gencache.EnsureDispatch("Outlook.Application").GetNamespace("MAPI")
+
+
 logging.basicConfig(filename=LOG_FILE, encoding='utf-8', level=logging.DEBUG)
 
 '''
@@ -52,7 +53,7 @@ def read_tasks_into_outlook():
 
     #Now loop through our tasks in Outlook and try to match 
     thisFolder = OUTLOOK.GetDefaultFolder(13)
-    folderItems = thisFolder.items
+    folderItems = thisFolder.Items
 
     for task in folderItems:
         this_task_id=str(task.EntryID)
@@ -79,6 +80,7 @@ def read_tasks_into_outlook():
             if(modified_flag!='Y'):
                 logging.debug("Modified flag not set to Y - ignoring")
             else:
+                
                 #do update
                 logging.info("Modified is Y - try to update new text into task:"+rslt_df.iat[0,EXCEL_COL_NAMES["Subject"]-1])
 
@@ -99,7 +101,8 @@ def read_tasks_into_outlook():
                 #sheet.cell(row=2,column=EXCEL_COL_NAMES["EntryID"]).value=task.EntryID 
                 #sheet.cell(row=2,column=EXCEL_COL_NAMES["CreatedDate"]).value=str(task.CreationTime)
                 #sheet.cell(row=2,column=EXCEL_COL_NAMES["Modified"]).value=str(task.LastModificationTime) 
-        
+
+                task.Save()
     # ddd
     
     

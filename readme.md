@@ -28,3 +28,8 @@ Files
 
 
 Note about how to use with OneDrive
+
+
+** Useful technical docs **
+https://www.add-in-express.com/creating-addins-blog/2013/06/12/outlook-tasks-create-get-delete/
+https://docs.microsoft.com/en-us/dotnet/api/microsoft.office.interop.outlook.mapifolder?view=outlook-pia
