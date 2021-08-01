@@ -46,22 +46,22 @@ By "2 Way" we mean that edits in Outlook or the Excel file get synchonized with 
 1. [Install Python](https://www.python.org/downloads/) on your machine.
 1. Make sure you have the required libraries - typically this will be something like ``pip install pandas openpyxl pywin32`` in a terminal.
 1. Download the two files you need into a directory, listed at the top of the page
-    * Outlook.py - the actual sync script
+    * outlook.py - the actual sync script
     * task-data.xlsx - the Excel file that syncs with outlook
 1. Run the script in a terminal using a command similar to ``python outlook.py``
    * By Default - the script will look for the template (task-data.xls) in the same directory as it is run. Log files and backups will also by placed in this directory.
 
 ## Modifying the Script
 
-The comments in the Script should make it pretty clear what is going on. The Excel file names, the log file names and backups are all set as constants at the top of the file (e.g. if you want change the file location).
+The comments in the ''outlook.py'' script should make it pretty clear what is going on. The Excel file names, the log file names and backups are all set as constants at the top of the file (e.g. if you want change the Excel task file location).
 
-If you want to extract / upload different properties from the Outlook tasks (e.g. percent complete), the pattern should be very familiar. The names in code may differ in the Outlook object model, a link is given below to the Microsoft reference to help you.
+If you want to extract / upload different properties from the Outlook tasks (e.g. percent complete), the pattern should be very familiar. The names used in code may differ in the Outlook object model from what you use in the Outlook Desktop interface. A link is given below to the Microsoft reference to help you.
 
 ## More Technical Information
 
 The approach taken is to use the API provided by Outlook's COM model, rather than the newer Microsoft Graph API. The reason for this is that (currently) not all Task information is exposed by the Graph API - it appears to be limited to the few fields used in the Microsoft Todo app.
 
-There is a lot of information on the Web describing PyWin32 - the library used to connect Python to Windows Applications like Python. There is less information on the Object Model within Outlook - and mostly it is intended for VBA and C# users (athough the method calls and params are very similar). Some good starting points used in creating this script:
+There is a lot of information on the Web describing PyWin32 - the library used to connect Python to Windows Applications like Outlook. There is less information on the Object Model within Outlook - and mostly it is intended for VBA and C# users (athough the method calls and params are very similar). Some good starting points used in creating this script:
 
 * [Blogpost describing Outlook task manipulation in C#](https://www.add-in-express.com/creating-addins-blog/2013/06/12/outlook-tasks-create-get-delete/)
 * [Microsoft Docs describing the Outlook Com Object model](https://docs.microsoft.com/en-us/dotnet/api/microsoft.office.interop.outlook.mapifolder?view=outlook-pia)
