@@ -28,7 +28,7 @@ The script synchronizes (2 way) with an Excel file like the one below. Of course
 
 By "2 Way" we mean that edits in Outlook or the Excel file get synchonized with each other, back and forward. But for safety first, we treat the Outlook Task list as the 'gold' copy. 
 
-### Synchonisation process
+### Synchronisation process
 
 * Script loops through Tasks in Outlook, checking the unique EntryID
   * Script searches the Excel file (normally task-data.xls) for any Tasks matching this ID
