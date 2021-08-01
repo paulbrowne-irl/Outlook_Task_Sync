@@ -11,8 +11,8 @@ from openpyxl import load_workbook
     
 '''
 Synchonize Outlook Tasks with an Excel file
-Look at Readme.md for an overview of what this script does
 '''
+
 #Constants
 LOG_FILE="task.log"
 EXCEL_TASK_FILE="task-data.xlsx"
@@ -30,13 +30,15 @@ EXCEL_COL_NAMES={
 
 #Handle TO Outlook, Logs and other objects we will need later
 OUTLOOK = win32com.client.Dispatch("Outlook.Application").GetNamespace("MAPI")
-#OUTLOOK = win32com.client.gencache.EnsureDispatch("Outlook.Application").GetNamespace("MAPI")
 
-
+#Set the Logging level. Change it to logging.INFO is you want just the important info
 logging.basicConfig(filename=LOG_FILE, encoding='utf-8', level=logging.DEBUG)
 
+
+
+
 '''
-Read Task from Excel, update into excel if possible
+Read Task from Excel, update into Outlook if possible
 '''
 def read_tasks_into_outlook():
     
@@ -47,7 +49,7 @@ def read_tasks_into_outlook():
     task_df_excel.fillna('',inplace=True)
     task_df_excel.set_index('EntryID')
 
-    logging.debug("Loaded from Excel")
+    logging.info("Loaded from Excel")
     logging.debug(task_df_excel)
 
 
@@ -71,42 +73,36 @@ def read_tasks_into_outlook():
             my_filter = task_df_excel['EntryID'] == this_task_id
 
             #Process this and decide to update
-            rslt_df = task_df_excel.loc[my_filter]
+            single_task_df = task_df_excel.loc[my_filter]
             logging.debug("Matched in XL")
-            logging.debug(rslt_df)
+            logging.debug(single_task_df)
 
             #Now decide if we update or not
-            modified_flag= rslt_df.iat[0,EXCEL_COL_NAMES["Modified"]-1]  #adjust for being index based
+            modified_flag= single_task_df.iat[0,EXCEL_COL_NAMES["Modified"]-1]  #adjust for being 0 index based
             if(modified_flag!='Y'):
                 logging.debug("Modified flag not set to Y - ignoring")
             else:
                 
                 #do update
-                logging.info("Modified is Y - try to update new text into task:"+rslt_df.iat[0,EXCEL_COL_NAMES["Subject"]-1])
+                logging.info("Modified is Y - try to update new text into task:"+single_task_df.iat[0,EXCEL_COL_NAMES["Subject"]-1])
 
-                #Update the values
-                #sheet.cell(row=2,column=EXCEL_COL_NAMES["Importance"]).value=task.Importance
-                #sheet.cell(row=2,column=EXCEL_COL_NAMES["Role"]).value=task.Role 
-                #sheet.cell(row=2,column=EXCEL_COL_NAMES["Categories"]).value=task.Categories # make comma safe?
-                task.Subject= rslt_df.iat[0,EXCEL_COL_NAMES["Subject"]-1]
-                print("attepting to update subject to:"+rslt_df.iat[0,EXCEL_COL_NAMES["Subject"]-1])
-                print("now value:"+task.Subject)
-                #sheet.cell(row=2,column=EXCEL_COL_NAMES["Team"]).value=task.TeamTask 
+                #Update the values into the Outlook task
+                task.Importance=single_task_df.iat[0,EXCEL_COL_NAMES["Importance"]-1]
+                task.Role=single_task_df.iat[0,EXCEL_COL_NAMES["Role"]-1]
+                task.Categories=single_task_df.iat[0,EXCEL_COL_NAMES["Categories"]-1]
+                task.Subject= single_task_df.iat[0,EXCEL_COL_NAMES["Subject"]-1]
+                task.TeamTask= single_task_df.iat[0,EXCEL_COL_NAMES["Team"]-1]
                 
-                #update Due Date only if it is not default
-                #tmpDate = str(task.DueDate)
-                #if(tmpDate!="4501-01-01 00:00:00+00:00"):
-                #    sheet.cell(row=2,column=EXCEL_COL_NAMES["DueDate"]).value=tmpDate
+                #update Due Date only if it is not empty
+                tmpDate = str(single_task_df.iat[0,EXCEL_COL_NAMES["DueDate"]-1])
+                if(tmpDate!=""):
+                    task.DueDate = tmpDate
 
-                #sheet.cell(row=2,column=EXCEL_COL_NAMES["EntryID"]).value=task.EntryID 
-                #sheet.cell(row=2,column=EXCEL_COL_NAMES["CreatedDate"]).value=str(task.CreationTime)
-                #sheet.cell(row=2,column=EXCEL_COL_NAMES["Modified"]).value=str(task.LastModificationTime) 
+                #task.EntryID - does not change
+                #task.creationTime - does not change
+                #task.LastModificationTime - auto updated by Outlook
 
                 task.Save()
-    # ddd
-    
-    
- 
 
 
 '''
@@ -140,6 +136,9 @@ def clear_excel_output_file():
     #Save the result
     workbook.save(filename=EXCEL_TASK_FILE)
     workbook.close
+
+
+
 
 
 '''
@@ -181,11 +180,14 @@ def export_tasks_to_excel():
     #Save the result
     workbook.save(filename=EXCEL_TASK_FILE)
 
+
+
+
 # simple code to run from command line
 if __name__ == '__main__':
     
     # Carry out the steps to sync excel adn outlook
-    #read_tasks_into_outlook()
+    read_tasks_into_outlook()
     clear_excel_output_file()
     export_tasks_to_excel()
     
