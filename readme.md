@@ -20,7 +20,7 @@ Given a typical Outlook Task folder like this:
 
 ![Outlook Tasks Screenshot](images/outlook-tasks.png)
 
-Synchronize (2 way) with an Excel file like the one below. Of course a typically todo / task list could have a hundred (or more items). At least mine does.
+The script synchronizes (2 way) with an Excel file like the one below. Of course a typical todo / task list could have a hundred (or more items).
 
 ![Excel Tasks Screenshot](images/excel-tasks.png)
 
@@ -44,6 +44,7 @@ By "2 Way" we mean that edits in Outlook or the Excel file get synchonized with 
 
 1. Make sure you have Outlook on your machine -(doh!)
 1. [Install Python](https://www.python.org/downloads/) on your machine.
+1. Make sure you have the required libraries - typically this will be something like ``pip install pandas openpyxl pywin32`` in a terminal.
 1. Download the two files you need into a directory, listed at the top of the page
     * Outlook.py - the actual sync script
     * task-data.xlsx - the Excel file that syncs with outlook
