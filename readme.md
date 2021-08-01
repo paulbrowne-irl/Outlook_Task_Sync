@@ -31,10 +31,10 @@ By "2 Way" we mean that edits in Outlook or the Excel file get synchonized with 
 ### Synchronisation process
 
 * Script loops through Tasks in Outlook, checking the unique EntryID
-  * Script searches the Excel file (normally task-data.xls) for any Tasks matching this ID
+  * Script searches the Excel file (normally ``task-data.xls`` ) for any Tasks matching this ID
   * Script tries to update the Outlook task __only if__ a matching task in Excel has __Modified set to Y__
-* Script makes a backup copy of any previous Excel file. e.g. copy task-data.xls to 1task-data.xls, etc
-* Script makes a template from the previous Excel sheet (task-data.xls) - deletes out all data except the first row, keeping  formatting, filters etc.
+* Script makes a backup copy of any previous Excel file. e.g. copy ``task-data.xls`` to ``1task-data.xls``, etc
+* Script makes a template from the previous Excel sheet (``task-data.xls``) - deletes out all data except the first row, keeping  formatting, filters etc.
 * For all Outlook Tasks, the Script outputs selected fields to this Excel file.
 * Following the 'Outlook is Gold' approach, this script
   * Does not delete in Outlook any task deleted in Excel - since we could mistakenly delete a new Outlook task, created after the Excel List was exported.
