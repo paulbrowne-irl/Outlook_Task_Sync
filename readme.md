@@ -1,7 +1,10 @@
 # Sync Outlook Tasks with Excel
 
-Synchronize Outlook Tasks folder with an Excel file
+Synchronize Outlook Tasks folder with an Excel file.
 ## Why would I want to do this?
+
+[GTD (Getting things done)](https://en.wikipedia.org/wiki/Getting_Things_Done) and other time / task / personal productivity approaches underline the importance of a Single Todo List, not your email inbox, that is easy to add to and is accessible anywhere.
+
 1) More power than microsoft todo
 2) onedrive, bulk edit in excel
 
@@ -39,6 +42,9 @@ By "2 Way" we mean that edits in Outlook or the Excel file get synchonized with 
 * We make a backup copy of any previous excel file. e.g. copy task-data.xls to 1task-data.xls, etc
 * We then make a template from previous excel sheet (task-data.xls) - delete out all data except the first row. This allows us to keep formatting, filters etc.
 * For all Outlook Tasks, we output selected fields to this excel file.
+* Following the 'Outlook is Gold' approach, this script
+    * Does not delete in Outlook any task deleted in Excel - since we could mistakenly delete a new Outlook task, created after the Excel List was exported.
+    * Does not add to Outlook, and task added to Excel - since we could mistakenly add back a task we decided to delete in Outlook
 
 ## How to Use
 
