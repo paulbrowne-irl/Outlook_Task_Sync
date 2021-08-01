@@ -148,7 +148,7 @@ Output Tasks from Outlook Into Excel
 def export_tasks_to_excel():
     thisFolder = OUTLOOK.GetDefaultFolder(13)
 
-    folderItems = thisFolder.items
+    folderItems = thisFolder.Items
     logging.info ("EXPORTING TASKS TO EXCEL")
  
     #Open Excel Sheet using Python
@@ -185,7 +185,7 @@ def export_tasks_to_excel():
 if __name__ == '__main__':
     
     # Carry out the steps to sync excel adn outlook
-    read_tasks_into_outlook()
-    #clear_excel_output_file()
-    #export_tasks_to_excel()
+    #read_tasks_into_outlook()
+    clear_excel_output_file()
+    export_tasks_to_excel()
     
