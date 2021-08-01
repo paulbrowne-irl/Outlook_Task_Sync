@@ -47,14 +47,14 @@ By "2 Way" we mean that edits in Outlook or the Excel file get synchonized with 
 1. [Install Python](https://www.python.org/downloads/) on your machine.
 1. Make sure you have the required libraries - typically this will be something like ``pip install pandas openpyxl pywin32`` in a terminal.
 1. Download the two files you need into a directory, listed at the top of the page
-    * outlook.py - the actual sync script
-    * task-data.xlsx - the Excel file that syncs with outlook
+    * ``outlook.py`` - the actual sync script
+    * ``task-data.xlsx`` - the Excel file that syncs with outlook
 1. Run the script in a terminal using a command similar to ``python outlook.py``
    * By Default - the script will look for the template (task-data.xls) in the same directory as it is run. Log files and backups will also by placed in this directory.
 
 ## Modifying the Script
 
-The comments in the ''outlook.py'' script should make it pretty clear what is going on. The Excel file names, the log file names and backups are all set as constants at the top of the file (e.g. if you want change the Excel task file location).
+The comments in the ``outlook.py`` script should make it pretty clear what is going on. The Excel file names, the log file names and backups are all set as constants at the top of the file (e.g. if you want change the Excel task file location).
 
 If you want to extract / upload different properties from the Outlook tasks (e.g. percent complete), the pattern should be very familiar. The names used in code may differ in the Outlook object model from what you use in the Outlook Desktop interface. A link is given below to the Microsoft reference to help you.
 
