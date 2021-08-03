@@ -51,6 +51,7 @@ By "2 Way" we mean that edits in Outlook or the Excel file get synchonized with 
     * ``task-data.xlsx`` - the Excel file that syncs with outlook
 1. Run the script in a terminal using a command similar to ``python outlook.py``
    * By Default - the script will look for the template (task-data.xls) in the same directory as it is run. Log files and backups will also by placed in this directory.
+   * Outlook.bat is there for convenience.
 
 ## Modifying the Script
 
