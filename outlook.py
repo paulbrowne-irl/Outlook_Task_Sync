@@ -76,34 +76,39 @@ def read_tasks_into_outlook():
             single_task_df = task_df_excel.loc[my_filter]
             logging.debug("Matched in XL")
             logging.debug(single_task_df)
+            
+            try:
 
-            #Now decide if we update or not
-            modified_flag= single_task_df.iat[0,EXCEL_COL_NAMES["Modified"]-1]  #adjust for being 0 index based
-            if(modified_flag!='Y'):
-                logging.debug("Modified flag not set to Y - ignoring")
-            else:
-                
-                #do update
-                logging.info("Modified is Y - try to update new text into task:"+single_task_df.iat[0,EXCEL_COL_NAMES["Subject"]-1])
+                #Now decide if we update or not
+                modified_flag= single_task_df.iat[0,EXCEL_COL_NAMES["Modified"]-1]  #adjust for being 0 index based
+                if(modified_flag!='Y'):
+                    logging.debug("Modified flag not set to Y - ignoring")
+                else:
+                    
+                    #do update
+                    logging.info("Modified is Y - try to update new text into task:"+single_task_df.iat[0,EXCEL_COL_NAMES["Subject"]-1])
 
-                #Update the values into the Outlook task
-                task.Importance=single_task_df.iat[0,EXCEL_COL_NAMES["Importance"]-1]
-                task.Role=single_task_df.iat[0,EXCEL_COL_NAMES["Role"]-1]
-                task.Categories=single_task_df.iat[0,EXCEL_COL_NAMES["Categories"]-1]
-                task.Subject= single_task_df.iat[0,EXCEL_COL_NAMES["Subject"]-1]
-                task.TeamTask= single_task_df.iat[0,EXCEL_COL_NAMES["Team"]-1]
-                
-                #update Due Date only if it is not empty
-                tmpDate = str(single_task_df.iat[0,EXCEL_COL_NAMES["DueDate"]-1])
-                if(tmpDate!=""):
-                    task.DueDate = tmpDate
+                    #Update the values into the Outlook task
+                    task.Importance=single_task_df.iat[0,EXCEL_COL_NAMES["Importance"]-1]
+                    task.Role=single_task_df.iat[0,EXCEL_COL_NAMES["Role"]-1]
+                    task.Categories=single_task_df.iat[0,EXCEL_COL_NAMES["Categories"]-1]
+                    task.Subject= single_task_df.iat[0,EXCEL_COL_NAMES["Subject"]-1]
+                    task.TeamTask= single_task_df.iat[0,EXCEL_COL_NAMES["Team"]-1]
+                    
+                    #update Due Date only if it is not empty
+                    tmpDate = str(single_task_df.iat[0,EXCEL_COL_NAMES["DueDate"]-1])
+                    if(tmpDate!=""):
+                        task.DueDate = tmpDate
 
-                #task.EntryID - does not change
-                #task.creationTime - does not change
-                #task.LastModificationTime - auto updated by Outlook
+                    #task.EntryID - does not change
+                    #task.creationTime - does not change
+                    #task.LastModificationTime - auto updated by Outlook
 
-                task.Save()
+                    task.Save()
 
+            except Exception as e:
+                logging.warn("Recovering from error when finding and updating Outlook task:")
+                logging.warn(e)
 
 '''
 Clear the tasks output file, so we can reuse the formatting
