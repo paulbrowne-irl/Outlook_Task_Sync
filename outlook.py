@@ -42,7 +42,7 @@ Read Task from Excel, update into Outlook if possible
 '''
 def read_tasks_into_outlook():
     
-    logging.info ("READING TASKS INTO OUTLOOK")
+    print ("\nREADING TASKS INTO OUTLOOK")
 
     # Read our Excel tasks into a pandas dataframe
     task_df_excel = pd.read_excel(EXCEL_TASK_FILE, index_col=False)
@@ -58,6 +58,10 @@ def read_tasks_into_outlook():
     folderItems = thisFolder.Items
 
     for task in folderItems:
+
+        #update to user
+        print(".", end ='')
+
         this_task_id=str(task.EntryID)
         logging.debug("Looking for update to:"+this_task_id[-10:])
 
@@ -114,7 +118,8 @@ def read_tasks_into_outlook():
 Clear the tasks output file, so we can reuse the formatting
 '''
 def clear_excel_output_file():
-    logging.info ("CLEARING EXCEL TASK FILE")
+
+    print ("\nCLEARING OLD EXCEL TASK FILE")
 
     #Make a backup of the original file
     counter =1
@@ -138,6 +143,9 @@ def clear_excel_output_file():
         logging.debug("deleting row")
         sheet.delete_rows(2)
 
+        #update to user
+        print(".", end ='')
+
     #Save the result
     workbook.save(filename=EXCEL_TASK_FILE)
     workbook.close
@@ -153,13 +161,17 @@ def export_tasks_to_excel():
     thisFolder = OUTLOOK.GetDefaultFolder(13)
 
     folderItems = thisFolder.Items
-    logging.info ("EXPORTING TASKS TO EXCEL")
+    print ("\nEXPORTING TASKS TO EXCEL")
  
     #Open Excel Sheet using Python
     workbook = load_workbook(filename=EXCEL_TASK_FILE)
     sheet = workbook.active
 
     for task in folderItems:
+
+        #update to user
+        print(".", end ='')
+
         logging.debug("Outputting task:"+task.Subject)
         
         #insert a new clear line (shifting other tasks downwards)
